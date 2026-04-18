@@ -53,6 +53,18 @@ st.markdown(
         padding: 20px; border-radius: 12px; border: 1px solid #4a4a8a;
         box-shadow: 0 8px 20px rgba(0,0,0,0.6); margin-bottom: 15px;
     }
+
+    /* KOTAK TERKUNCI (LOCK SYSTEM) */
+    .locked-box {
+        background: linear-gradient(180deg, #2a0a0a 0%, #110000 100%);
+        padding: 25px; border-radius: 12px; border: 2px dashed #ff4b4b;
+        text-align: center; margin-top: 20px; margin-bottom: 20px;
+        box-shadow: inset 0 0 20px rgba(255,0,0,0.2);
+    }
+    .blur-text {
+        color: transparent; text-shadow: 0 0 8px rgba(255,255,255,0.7);
+        user-select: none;
+    }
     
     .matrix-container {
         display: flex; justify-content: space-between; gap: 8px;
@@ -90,7 +102,6 @@ def ambil_ulasan():
         with urllib.request.urlopen(req) as response:
             decoded = response.read().decode('utf-8')
             reader = csv.DictReader(io.StringIO(decoded))
-            # Balik urutan biar yang paling baru (terbawah di sheet) muncul duluan
             return [row for row in reader][::-1]
     except: return []
 
@@ -182,7 +193,6 @@ link_produk = {
     9: "http://lynk.id/neuronada/704ke23nzmgx/checkout"
 }
 
-# --- FUNGSI LOGIKA NUMERIK & FALAK ---
 def get_arketipe(angka):
     arketipe_dict = {
         1: "The Leader (Sang Perintis)", 2: "The Mediator (Sang Penyelaras)", 
@@ -346,7 +356,6 @@ with tab1:
             st.snow()
             st.markdown(f"<h3 style='text-align:center;'>🌌 Blueprint Kosmik: {nama_user.upper()}</h3>", unsafe_allow_html=True)
             
-            # --- DAILY GUIDANCE KOSMIK (WARNA DINAMIS + KETERANGAN FASE) ---
             if today_energy > 70: warna_baterai, glow = "#25D366", "rgba(37, 211, 102, 0.5)"
             elif today_energy > 40: warna_baterai, glow = "#FFD700", "rgba(255, 215, 0, 0.5)"
             else: warna_baterai, glow = "#ff4b4b", "rgba(255, 75, 75, 0.5)"
@@ -377,14 +386,10 @@ with tab1:
             </div>
             """, unsafe_allow_html=True)
             
-            # --- THE DEEP READING ---
-            st.markdown("### 👁️ Decode Kepribadian Bawah Sadar")
+            st.markdown("### 👁️ Identitas Bawah Sadar Anda")
             st.info(f"*{hook_text}* Perpaduan frekuensi weton **{wet}** dan zodiak **{zod}** melahirkan arketipe unik dalam diri Anda:\n\n**IDENTITAS INTI:** {punchy['inti']}")
             
-            st.subheader(f"🧬 Penjelasan Mendalam: {ark_n}")
-            st.write(desk_ark)
-            
-            st.markdown("🔥 **3 KEKUATAN DOMINAN:**")
+            st.markdown("🔥 **KEKUATAN DOMINAN ANDA:**")
             st.markdown(f"""
             <ul class="list-punchy" style="color:#25D366;">
                 <li>{punchy['kekuatan'][0]}</li>
@@ -393,16 +398,37 @@ with tab1:
             </ul>
             """, unsafe_allow_html=True)
             
-            st.markdown("⚠️ **SISI GELAP (SHADOW SELF):**")
+            st.markdown("---")
+            loading_shadow = st.empty()
+            loading_shadow.warning("⚠️ Menganalisa rekam jejak kegagalan Anda...")
+            time.sleep(1.5)
+            loading_shadow.error("⚠️ Menemukan pola sabotase bawah sadar!")
+            time.sleep(1)
+            loading_shadow.empty()
+
             st.markdown(f"""
-            <ul class="list-punchy" style="color:#ff4b4b;">
-                <li>{shadow[0]}</li>
-                <li>{shadow[1]}</li>
-                <li>{shadow[2]}</li>
-            </ul>
+            <div class="locked-box">
+                <h3 style="color:#ff4b4b; margin-top:0;">🔒 DATA TERKUNCI (SHADOW SELF)</h3>
+                <p style="color:#f0f0f0; font-size:15px; margin-bottom:15px;">Kenapa hidup Anda terasa <i>stuck</i> padahal Anda punya potensi besar? Karena ada pola bawah sadar yang diam-diam menahan Anda. Kami mendeteksi <b>3 Konflik Fatal</b> dalam pikiran Anda:</p>
+                <ul style="list-style:none; padding:0; font-size:16px;">
+                    <li style="margin-bottom:8px;">❌ <span class="blur-text">Mengorbankan kebahagiaan diri demi ekspektasi orang lain yang berlebihan.</span></li>
+                    <li style="margin-bottom:8px;">❌ <span class="blur-text">Sulit melepaskan kontrol dan memaksa tubuh mengabaikan rasa lelah.</span></li>
+                    <li style="margin-bottom:8px;">❌ <span class="blur-text">Sering memaklumi orang toxic atas nama kasihan hingga batin hancur.</span></li>
+                </ul>
+                <p style="color:#FFD700; font-weight:bold; font-size:14px; margin-top:15px;">Jika dibiarkan, pola ini akan terus mengulang kegagalan karir dan asmara Anda!</p>
+            </div>
             """, unsafe_allow_html=True)
             
-            # --- PENJELASAN FALAK KELAHIRAN ---
+            url_t = link_produk.get(angka_hasil, "https://lynk.id/neuronada")
+            st.markdown(f"""
+            <a href="{url_t}" target="_blank" style="text-decoration: none;">
+                <div class="cta-button">
+                    🔓 BONGKAR FULL BLUEPRINT & HANCURKAN POLA GAGAL (RP 39.000)
+                </div>
+            </a>
+            """, unsafe_allow_html=True)
+            st.markdown("<p style='text-align:center; font-size:12px; color:#888; margin-top:5px;'>Dapatkan Laporan PDF Premium berisi Penjelasan Karakter Mendalam, Sisi Gelap, Trik Komunikasi Asmara, dan Modul Terapi Audio khusus Kode Anda.</p>", unsafe_allow_html=True)
+            
             st.markdown("---")
             st.subheader("🌑 Energi Bawah Sadar (Fase Bulan Lahir)")
             st.write(f"Sistem kosmik mencatat Anda lahir pada fase **{m_phase}**. {m_sifat}")
@@ -410,28 +436,9 @@ with tab1:
             c_f_do.success(f"✅ **POTENSI ALAMI:**\n{m_do}")
             c_f_dont.error(f"❌ **RESIKO BAWAAN:**\n{m_dont}")
             
-            # --- PSYCHOLOGICAL CTA ---
-            st.markdown("<br>", unsafe_allow_html=True)
-            url_t = link_produk.get(angka_hasil, "https://lynk.id/neuronada")
-            st.markdown(f"""
-            <a href="{url_t}" target="_blank" style="text-decoration: none;">
-                <div class="cta-button">
-                    ⚠️ BONGKAR MENTAL BLOCK KODE {angka_hasil} & REBUT KENDALI HIDUP ANDA
-                </div>
-            </a>
-            """, unsafe_allow_html=True)
-            st.caption("<center>Modul PDF ini memuat skrip re-programming alam bawah sadar khusus untuk mematikan pola sabotase diri Anda.</center>", unsafe_allow_html=True)
-            
             st.markdown("---")
-            st.markdown("<h4 style='text-align:center;'>🚀 Tindakan Ekstra</h4>", unsafe_allow_html=True)
-            wa_text = f"Coach Ahmad, saya merinding baca hasil mapping Kode {angka_hasil}. Saya capek jadi korban 'Shadow Self'. Saya siap kalibrasi di Private Session."
-            c_share, c_wa = st.columns(2)
-            
-            with c_share:
-                wa_share = f"Gila, akurat banget! Blueprint bawah sadar gue kebongkar semua. Cobain cek identitas kosmik lu di sini: https://lynk.id/neuronada"
-                st.markdown(f"<a href='https://api.whatsapp.com/send?text={urllib.parse.quote(wa_share)}' target='_blank'><div style='background-color:#333; color:white; padding:10px; text-align:center; border-radius:8px; font-weight:bold;'>📤 Bagikan ke Status / Teman</div></a>", unsafe_allow_html=True)
-            with c_wa:
-                st.markdown(f"<a href='https://wa.me/628999771486?text={urllib.parse.quote(wa_text)}' target='_blank'><div style='background-color:#25D366; color:white; padding:10px; text-align:center; border-radius:8px; font-weight:bold;'>📲 Tanya Jadwal Private</div></a>", unsafe_allow_html=True)
+            wa_share = f"Gila, Blueprint Kosmik ini akurat banget baca potensi gue! Coba cek takdir bawah sadar lo di sini: https://www.lu.se/webmail"
+            st.markdown(f"<center><a href='https://api.whatsapp.com/send?text={urllib.parse.quote(wa_share)}' target='_blank' style='text-decoration:none;'><div style='background-color:#111; color:white; padding:10px 20px; border-radius:8px; display:inline-block; font-weight:bold; border: 1px solid #333;'>📤 Share ke WhatsApp (Coba Cek Pasangan Lo)</div></a></center>", unsafe_allow_html=True)
 
 # ==========================================
 # TAB 2: COUPLE SYNC 
@@ -487,12 +494,12 @@ with tab2:
             else: st.error("🔥 **SKOR META-PROGRAM (NLP): 50% (Rawan Gesekan)**\nEgo tinggi sering berbenturan keras. Butuh teknik komunikasi bawah sadar khusus.")
 
             st.markdown("<br>", unsafe_allow_html=True)
-            st.markdown("**Berdasarkan Kalkulasi Di Atas, Ini Panduan Hubungan Anda:**")
-            c_do_c, c_dont_c = st.columns(2)
-            with c_do_c:
-                st.success(f"✅ **LAKUKAN INI:**\n\n{saran_do}")
-            with c_dont_c:
-                st.error(f"❌ **HINDARI INI:**\n\n{saran_dont}")
+            st.markdown("""
+            <div style="background:#2a0a0a; padding:15px; border-radius:8px; border:1px solid #ff4b4b; text-align:center;">
+                <p style="color:#ff4b4b; font-weight:bold; margin:0;">🔒 TRIK KOMUNIKASI BAWAH SADAR TERKUNCI</p>
+                <p style="font-size:12px; color:#aaa;">Ingin tahu cara menundukkan ego pasangan dan panduan <b>DO'S & DONT'S</b> lengkap? Dapatkan Blueprint Premium Anda.</p>
+            </div>
+            """, unsafe_allow_html=True)
 
 # ==========================================
 # TAB 3: AUDIT SISTEM SARAF
@@ -546,11 +553,9 @@ with tab3:
 st.markdown("---")
 st.markdown("<h3 style='text-align: center; color: #D4AF37;'>Jejak Transformasi</h3>", unsafe_allow_html=True)
 
-# Ambil data real dari Google Sheets
 daftar_ulasan = ambil_ulasan()
 
 if daftar_ulasan:
-    # Marquee (Running Text) menggunakan data dinamis (3 data terbaru)
     pilihan_marquee = daftar_ulasan[:3]
     marquee_content = " | ".join([f"<span style='color: #FFD700;'>{u.get('Rating', '⭐⭐⭐⭐⭐')}</span> <b>{u.get('Nama', 'User')}:</b> \"{u.get('Komentar', '')[:50]}...\"" for u in pilihan_marquee])
     
@@ -563,13 +568,12 @@ if daftar_ulasan:
     """
     st.markdown(marquee_html, unsafe_allow_html=True)
 
-    # List Testimoni (5 Real Rating Terkini)
     for u in daftar_ulasan[:5]:
         nama_klien = u.get("Nama", "Jiwa Kosmik")
         rating_klien = u.get("Rating", "⭐⭐⭐⭐⭐")
         komentar_klien = u.get("Komentar", "")
         
-        if komentar_klien: # Hanya tampilkan jika ada komentar
+        if komentar_klien:
             st.markdown(f"""
             <div class="ulasan-box">
                 <span style="color: #FFD700; font-size: 12px;">{rating_klien}</span><br>
