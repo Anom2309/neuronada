@@ -10,6 +10,15 @@ import csv
 import io
 import hashlib
 
+# --- DATABASE EMAIL PREMIUM (POIN 1: PENGGANTI KODE "NEUROVIP") ---
+# Lu bisa masukin email klien yang udah bayar ke dalam list ini secara manual, 
+# atau nantinya di-connect ke Google Sheets.
+VIP_EMAILS = [
+    "neurovip@gmail.com", 
+    "ahmad@neuronada.com",
+    "klien1@gmail.com"
+]
+
 # --- INIT SESSION STATE (PAYWALL) ---
 if 'premium' not in st.session_state:
     st.session_state.premium = False
@@ -498,18 +507,22 @@ with st.sidebar:
  
     st.markdown(f"### {get_greeting()}")
     st.markdown("---")
+    
+    # PERUBAHAN POIN 1: LOGIN BERBASIS EMAIL BUKAN KODE "NEUROVIP" LAGI
     st.markdown("### 🔓 Akses Premium")
     if not st.session_state.premium:
-        kode_input = st.text_input("Punya Kode Akses? Ketik di sini:", type="password")
-        if kode_input:
-            if kode_input.upper() == "NEUROVIP": 
+        email_input = st.text_input("Masukan Email Akses VIP:", placeholder="Ketik email terdaftar Anda...")
+        if email_input:
+            if email_input.lower() in VIP_EMAILS: 
                 st.session_state.premium = True
                 st.toast("Akses Terbuka! Selamat Datang di Mode VIP.", icon="👑")
                 time.sleep(1)
                 st.rerun()
             else:
-                st.error("❌ Kode Salah atau Kadaluarsa.")
-        st.markdown("<p style='font-size:13px; color:#888;'>Dapatkan Kode Akses via <a href='https://wa.me/628999771486?text=Halo%20Coach%20Ahmad,%20saya%20mau%20beli%20Kode%20Akses%20Premium%20Neuro%20Nada%20Academy.' target='_blank' style='color:#25D366; font-weight:bold; text-decoration:none;'>WhatsApp</a></p>", unsafe_allow_html=True)
+                st.error("❌ Email Anda belum terdaftar aktif.")
+        
+        # PERUBAHAN POIN 2: CTA DI SIDEBAR MENGARAH KE PAYMENT GATEWAY OTOMATIS
+        st.markdown("<p style='font-size:13px; color:#888;'>Belum punya akses VIP? <br><a href='[LINK_PAYMENT_GATEWAY_LU_DISINI]' target='_blank' style='color:#25D366; font-weight:bold; text-decoration:none;'>🚀 Daftar & Bayar Otomatis Di Sini</a></p>", unsafe_allow_html=True)
     else:
         st.success("👑 Status: VIP MEMBER")
         if st.button("Logout"):
@@ -618,6 +631,7 @@ with tab1:
 </div>""", unsafe_allow_html=True)
                 
                 if not st.session_state.premium:
+                    # PERUBAHAN POIN 2: CTA DI TAB 1 MENGARAH KE PAYMENT GATEWAY
                     st.markdown(f"""<div class="glass-container soft-fade" style="text-align:center; border: 2px solid #ff4b4b; padding: 30px 20px;">
 <h3 style="color:#ff4b4b; margin-top:0;">🔓 Anda baru mengakses sebagian dari hasil pemetaan *Decoding* Anda...</h3>
 <div style="background: rgba(0,0,0,0.4); padding: 15px; border-radius: 8px; margin-bottom: 20px; text-align: left; display: inline-block;">
@@ -628,10 +642,10 @@ with tab1:
 <b style="color:#fff;">• Tab Matriks Kolaborasi: Bedah intensitas keselarasan komunikasi dengan rekan atau pasangan</b>
 </div>
 <p style="color:#FFD700; font-size: 16px;"><b>🔥 Catatan: Laporan komprehensif ini dikalibrasi secara eksklusif berdasar data unik klien.<br>Merupakan panduan spesifik untuk perbaikan manajemen diri.</b></p>
-<a href="https://wa.me/628999771486?text=Halo%20Coach%20Ahmad,%20saya%20mau%20beli%20Kode%20Akses%20Premium%20Neuro%20Nada%20Academy." target="_blank" style="text-decoration:none;">
+<a href="[LINK_PAYMENT_GATEWAY_LU_DISINI]" target="_blank" style="text-decoration:none;">
 <div class="cta-button" style="font-size:18px; margin-top: 10px;">🚀 AKTIFKAN LAPORAN PENUH SEKARANG</div>
 </a>
-<p style="font-size:14px; color:#ccc; margin-top:15px; margin-bottom: 5px;">Investasi Sistem: <b>Hanya Rp 19.000</b><br><i style="color:#888;">(Akses tak terbatas ke seluruh layanan untuk 1 bulan penuh.)</i></p>
+<p style="font-size:14px; color:#ccc; margin-top:15px; margin-bottom: 5px;">Investasi Sistem: <b>Hanya Rp 19.000</b><br><i style="color:#888;">(Pembayaran otomatis. Akses instan 24 jam dengan Email Anda.)</i></p>
 <div style="margin-top: 25px; border-top: 1px dashed #555; padding-top: 15px;">
 <span style="font-size:14px; color:#25D366; font-weight:bold;">🔥 {dynamic_users} individu telah memanfaatkan wawasan sistem ini untuk kemajuan mereka.</span><br>
 <span style="font-size:13px; color:#888;">Ambil kendali atas arah langkah Anda hari ini.</span>
@@ -673,12 +687,13 @@ with tab1:
 # ==========================================
 with tab2:
     if not st.session_state.premium:
+        # PERUBAHAN POIN 2: CTA DI TAB 2 MENGARAH KE PAYMENT GATEWAY
         st.markdown(f"""<div class='glass-container soft-fade' style='text-align: center; padding: 40px 20px;'>
 <h3 style='color: #ff4b4b; font-weight: 900; margin-top:0;'>💞 KALIBRASI DINAMIKA RELASI & KOMUNIKASI</h3>
 <p style='color: #ccc; font-size: 16px; margin-bottom: 20px;'>Petakan struktur perbedaan pendapat dan keselarasan Anda dengan rekan yang dituju. Temukan arah perkembangan hubungan ini secara profesional/personal:<br><b style='color:#ff4b4b;'>❤️ Sinergi yang Saling Melengkapi?</b> | <b style='color:#FFD700;'>⚡ Fase Penyesuaian Karakter Ekstra?</b> | <b style='color:#888;'>💔 Atau Konflik Berulang Akibat Miskomunikasi?</b></p>
 <p style='font-size: 14px; color: #aaa; margin-bottom: 30px;'>Ketik 2 nama pihak terkait dan bedah di titik mana perdebatan seringkali menemui jalan buntu.<br><i style='color:#ff4b4b;'>⚠️ Catatan Objektivitas: Hasil keluaran algoritma ini disusun untuk memberikan transparansi tajam tanpa mengurangi fakta ketidakcocokan. Digunakan untuk keperluan evaluasi relasi.</i></p>
-<a href="https://wa.me/628999771486?text=Halo%20Coach%20Ahmad,%20saya%20mau%20beli%20Kode%20Akses%20Premium%20Neuro%20Nada%20Academy." target="_blank" style="text-decoration: none;">
-<div class="cta-button" style="display: inline-block; padding: 15px 40px; font-size: 18px;">🚀 AKSES FITUR PEMETAAN HUBUNGAN VIA WA</div>
+<a href="[LINK_PAYMENT_GATEWAY_LU_DISINI]" target="_blank" style="text-decoration: none;">
+<div class="cta-button" style="display: inline-block; padding: 15px 40px; font-size: 18px;">🚀 AKSES FITUR PEMETAAN HUBUNGAN DI SINI</div>
 </a>
 </div>""", unsafe_allow_html=True)
     else:
@@ -753,11 +768,12 @@ with tab2:
 # ==========================================
 with tab5:
     if not st.session_state.premium:
+        # PERUBAHAN POIN 2: CTA DI TAB 5 MENGARAH KE PAYMENT GATEWAY
         st.markdown(f"""<div class='glass-container soft-fade' style='text-align: center; padding: 40px 20px;'>
 <h2 style='color: #ff4b4b; font-weight: 900;'>🔒 FITUR EKSKLUSIF MANAJEMEN WAKTU</h2>
 <p style='color: #ccc; font-size: 16px; margin-bottom: 30px;'>Anda telah mencapai batas ulasan pada layanan reguler. Dapatkan akses menuju <b>Tactical Action Plan (Peta Arahan Eksekusi Berbasis Pemantauan Real-time)</b> yang membantu menyelaraskan alur produktivitas Anda mengikuti dinamika fase harian.</p>
-<a href="https://wa.me/628999771486?text=Halo%20Coach%20Ahmad,%20saya%20mau%20beli%20Kode%20Akses%20Premium%20Neuro%20Nada%20Academy." target="_blank" style="text-decoration: none;">
-<div class="cta-button" style="display: inline-block; padding: 15px 40px; font-size: 18px;">🚀 DAPATKAN KODE AKSES FITUR LENGKAP</div>
+<a href="[LINK_PAYMENT_GATEWAY_LU_DISINI]" target="_blank" style="text-decoration: none;">
+<div class="cta-button" style="display: inline-block; padding: 15px 40px; font-size: 18px;">🚀 DAPATKAN AKSES FITUR LENGKAP DI SINI</div>
 </a>
 </div>""", unsafe_allow_html=True)
     else:
@@ -789,11 +805,12 @@ with tab5:
 # ==========================================
 with tab3:
     if not st.session_state.premium:
+        # PERUBAHAN POIN 2: CTA DI TAB 3 MENGARAH KE PAYMENT GATEWAY
         st.markdown(f"""<div class='glass-container soft-fade' style='text-align: center; padding: 40px 20px;'>
 <h2 style='color: #ff4b4b; font-weight: 900;'>🔒 FITUR MANAJEMEN EMOSIONAL TERKUNCI</h2>
 <p style='color: #ccc; font-size: 16px; margin-bottom: 30px;'>Hak akses ditangguhkan. Silakan peroleh izin tingkat lanjut untuk mengakses <b>Modul Terapi Falak Ruhani, Penyelarasan Dzikir Sesuai Afinitas, Afirmasi NLP, dan Arahan Tindakan Pengurai *Mental Block* Kepemimpinan</b>.</p>
-<a href="https://wa.me/628999771486?text=Halo%20Coach%20Ahmad,%20saya%20mau%20beli%20Kode%20Akses%20Premium%20Neuro%20Nada%20Academy." target="_blank" style="text-decoration: none;">
-<div class="cta-button" style="display: inline-block; padding: 15px 40px; font-size: 18px;">🚀 BUKA AKSES PENUH MELALUI WHATSAPP</div>
+<a href="[LINK_PAYMENT_GATEWAY_LU_DISINI]" target="_blank" style="text-decoration: none;">
+<div class="cta-button" style="display: inline-block; padding: 15px 40px; font-size: 18px;">🚀 BUKA AKSES PENUH DI SINI</div>
 </a>
 </div>""", unsafe_allow_html=True)
     else:
@@ -896,4 +913,4 @@ with st.expander("💬 Sampaikan Ulasan atau Kesan atas Temuan Resolusi Karakter
                 st.rerun()
  
 st.markdown("---")
-st.markdown("<center><b style='color:#FFF; letter-spacing:1px; font-size:16px;'>Ahmad Septian Dwi Cahyo</b><br><span style='color:#888; font-size:13px; display:inline-block; margin-top:5px;'>Certified NLP Trainer & Professional Hypnotherapist<br>Hak Cipta © 2026 Neuro Nada Academy (Build-V4.3 Filosofi Matriks)</span></center>", unsafe_allow_html=True)
+st.markdown("<center><b style='color:#FFF; letter-spacing:1px; font-size:16px;'>Ahmad Septian Dwi Cahyo</b><br><span style='color:#888; font-size:13px; display:inline-block; margin-top:5px;'>Certified NLP Trainer & Professional Hypnotherapist<br>Hak Cipta © 2026 Neuro Nada Academy (Build-V4.4 Email Auth)</span></center>", unsafe_allow_html=True)
