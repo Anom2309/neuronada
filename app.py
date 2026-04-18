@@ -28,6 +28,12 @@ VIP_EMAILS = [
 if 'premium' not in st.session_state:
     st.session_state.premium = False
 
+# INISIALISASI MEMORI CHATBOT NEURON AI
+if 'chat_history' not in st.session_state:
+    st.session_state.chat_history = [
+        {"role": "assistant", "content": "Halo! Saya **Neuron AI**. Ada yang ingin ditanyakan seputar hasil analisa ini atau cara aktivasi akses VIP?"}
+    ]
+
 # --- 3. CUSTOM CSS & SOFT ANIMATION ---
 st.markdown(
     """<style>
@@ -71,6 +77,31 @@ st.markdown(
     .list-punchy li { margin-bottom: 8px; }
     .live-badge { background: linear-gradient(90deg, #D4AF37, #FFD700); color: #000; padding: 8px 20px; border-radius: 30px; font-weight: 900; font-size: 14px; letter-spacing: 1px; display: inline-block; box-shadow: 0 4px 15px rgba(255,215,0,0.4); }
     .info-metric-box { background: rgba(255,215,0,0.05); border: 1px solid rgba(255,215,0,0.2); padding: 15px; border-radius: 8px; font-size: 14px; color: #ccc; margin-bottom: 20px; line-height: 1.6; }
+    
+    /* --- CSS KHUSUS WIDGET CHAT MENGAMBANG --- */
+    div[data-testid="stExpander"]:last-of-type {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 320px;
+        z-index: 9999;
+        background-color: rgba(15, 15, 18, 0.98);
+        border-radius: 12px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.9);
+        border: 1px solid #FFD700;
+        backdrop-filter: blur(10px);
+    }
+    div[data-testid="stExpander"]:last-of-type summary {
+        background: linear-gradient(90deg, #1a1a1a, #000);
+        color: #FFD700 !important;
+        font-weight: 900;
+        border-bottom: 1px solid rgba(255,215,0,0.3);
+        padding: 10px 15px;
+    }
+    div[data-testid="stExpander"]:last-of-type summary p {
+        font-size: 15px !important;
+        letter-spacing: 1px;
+    }
     </style>""", unsafe_allow_html=True
 )
 
@@ -212,7 +243,7 @@ def proc_arketipe(nama, angka, zodiak, neptu):
         6: "Ini menandakan Anda membawa energi Sang Harmonizer (Pengayom). Dedikasi dan rasa tanggung jawab moral Anda sangat tinggi. Secara insting, Anda akan selalu berusaha memastikan keamanan dan kesejahteraan orang-orang yang berada di dalam lingkaran kepercayaan Anda.",
         7: "Ini berarti Anda memiliki kerangka berpikir Analitik Forensik. Anda tidak akan mudah puas dengan jawaban yang dangkal. Filter rasionalitas Anda sangat rapat, memastikan setiap keputusan yang diambil selalu berbasiskan data, observasi tajam, dan pembuktian logis.",
         8: "Ini menunjukkan Anda memancarkan aura Sang Sovereign (Pemegang Kendali). Fokus alam bawah sadar Anda sangat terarah pada pencapaian, stabilitas material, dan kepemimpinan. Anda memiliki wibawa dominan yang menempatkan Anda pada posisi pengambil keputusan strategis.",
-        9: "Ini berarti Anda memiliki pendekatan layaknya Pemikir Bijaksana (*Old Soul*). Anda memandang realitas kehidupan dengan sudut pandang yang lebih luas dan matang. Empati universal yang Anda miliki memudahkan Anda untuk melihat benang merah dari setiap persoalan yang kompleks."
+        9: "Ini berarti Anda memiliki pendekatan layaknya Pemikir Bijaksana (*Old Soul*). Anda memandang realitas kehidupan dengan sudut pandang yang lebih luas dan matang. Empati universal yang Anda menjadikannya mudah untuk melihat benang merah dari setiap persoalan kompleks."
     }
     
     shadow = {
@@ -517,7 +548,6 @@ with st.sidebar:
             else:
                 st.error("❌ Email Anda belum terdaftar aktif.")
         
-        # LINK LYNK.ID SUDAH DISUNTIK DI SINI
         st.markdown("<p style='font-size:13px; color:#888;'>Belum punya akses VIP? <br><a href='http://lynk.id/neuronada/qgp6d4lr175j/checkout' target='_blank' style='color:#25D366; font-weight:bold; text-decoration:none;'>🚀 Daftar & Bayar Otomatis Di Sini</a></p>", unsafe_allow_html=True)
     else:
         st.success("👑 Status: VIP MEMBER")
@@ -549,6 +579,8 @@ st.markdown("<div style='text-align:center; margin-bottom:20px;'><span style='ba
 st.markdown("---")
  
 tgl_today = datetime.date.today()
+
+# TAB FAQ TETAP ADA DENGAN AMAN
 tab1, tab2, tab5, tab3, tab6, tab4 = st.tabs(["👤 Personal Identity", "👩‍❤️‍👨 Couple Matrix 🔒", "⏱️ Quantum Engine 🔒", "🌌 Falak Ruhani 🔒", "📚 Neuro-Insights", "❓ FAQ & Disclaimer"])
  
 # ==========================================
@@ -630,7 +662,6 @@ with tab1:
 </div>""", unsafe_allow_html=True)
                 
                 if not st.session_state.premium:
-                    # LINK LYNK.ID SUDAH DISUNTIK DI SINI (TAB 1)
                     st.markdown(f"""<div class="glass-container soft-fade" style="text-align:center; border: 2px solid #ff4b4b; padding: 30px 20px;">
 <h3 style="color:#ff4b4b; margin-top:0;">🔓 Anda baru mengakses sebagian dari hasil pemetaan *Decoding* Anda...</h3>
 <div style="background: rgba(0,0,0,0.4); padding: 15px; border-radius: 8px; margin-bottom: 20px; text-align: left; display: inline-block;">
@@ -686,7 +717,6 @@ with tab1:
 # ==========================================
 with tab2:
     if not st.session_state.premium:
-        # LINK LYNK.ID SUDAH DISUNTIK DI SINI (TAB 2)
         st.markdown(f"""<div class='glass-container soft-fade' style='text-align: center; padding: 40px 20px;'>
 <h3 style='color: #ff4b4b; font-weight: 900; margin-top:0;'>💞 KALIBRASI DINAMIKA RELASI & KOMUNIKASI</h3>
 <p style='color: #ccc; font-size: 16px; margin-bottom: 20px;'>Petakan struktur perbedaan pendapat dan keselarasan Anda dengan rekan yang dituju. Temukan arah perkembangan hubungan ini secara profesional/personal:<br><b style='color:#ff4b4b;'>❤️ Sinergi yang Saling Melengkapi?</b> | <b style='color:#FFD700;'>⚡ Fase Penyesuaian Karakter Ekstra?</b> | <b style='color:#888;'>💔 Atau Konflik Berulang Akibat Miskomunikasi?</b></p>
@@ -767,7 +797,6 @@ with tab2:
 # ==========================================
 with tab5:
     if not st.session_state.premium:
-        # LINK LYNK.ID SUDAH DISUNTIK DI SINI (TAB 5)
         st.markdown(f"""<div class='glass-container soft-fade' style='text-align: center; padding: 40px 20px;'>
 <h2 style='color: #ff4b4b; font-weight: 900;'>🔒 FITUR EKSKLUSIF MANAJEMEN WAKTU</h2>
 <p style='color: #ccc; font-size: 16px; margin-bottom: 30px;'>Anda telah mencapai batas ulasan pada layanan reguler. Dapatkan akses menuju <b>Tactical Action Plan (Peta Arahan Eksekusi Berbasis Pemantauan Real-time)</b> yang membantu menyelaraskan alur produktivitas Anda mengikuti dinamika fase harian.</p>
@@ -804,7 +833,6 @@ with tab5:
 # ==========================================
 with tab3:
     if not st.session_state.premium:
-        # LINK LYNK.ID SUDAH DISUNTIK DI SINI (TAB 3)
         st.markdown(f"""<div class='glass-container soft-fade' style='text-align: center; padding: 40px 20px;'>
 <h2 style='color: #ff4b4b; font-weight: 900;'>🔒 FITUR MANAJEMEN EMOSIONAL TERKUNCI</h2>
 <p style='color: #ccc; font-size: 16px; margin-bottom: 30px;'>Hak akses ditangguhkan. Silakan peroleh izin tingkat lanjut untuk mengakses <b>Modul Terapi Falak Ruhani, Penyelarasan Dzikir Sesuai Afinitas, Afirmasi NLP, dan Arahan Tindakan Pengurai *Mental Block* Kepemimpinan</b>.</p>
@@ -863,7 +891,7 @@ with tab3:
             else: st.warning("⚠️ Peringatan Input: Masukkan nama lengkap yang valid untuk keakuratan kalibrasi matriks.")
 
 # ==========================================
-# TAB 6 & 4
+# TAB 6 & 4 (FAQ TETAP ADA)
 # ==========================================
 with tab6:
     st.markdown("<div class='glass-container'>", unsafe_allow_html=True)
@@ -911,5 +939,49 @@ with st.expander("💬 Sampaikan Ulasan atau Kesan atas Temuan Resolusi Karakter
                 time.sleep(1)
                 st.rerun()
  
-st.markdown("---")
-st.markdown("<center><b style='color:#FFF; letter-spacing:1px; font-size:16px;'>Ahmad Septian Dwi Cahyo</b><br><span style='color:#888; font-size:13px; display:inline-block; margin-top:5px;'>Certified NLP Trainer & Professional Hypnotherapist<br>Hak Cipta © 2026 Neuro Nada Academy (Build-V4.6 Final Bug Fix)</span></center>", unsafe_allow_html=True)
+st.markdown("<center><br><b style='color:#FFF; letter-spacing:1px; font-size:16px;'>Ahmad Septian Dwi Cahyo</b><br><span style='color:#888; font-size:13px; display:inline-block; margin-top:5px;'>Certified NLP Trainer & Professional Hypnotherapist<br>Hak Cipta © 2026 Neuro Nada Academy (Build-V4.6 Final Chat)</span></center><br><br>", unsafe_allow_html=True)
+
+# ==========================================
+# 🤖 WIDGET CHATBOT NEURON AI (MENGAMBANG)
+# PENTING: Harus selalu berada di baris PALING BAWAH file agar CSS "last-of-type" berfungsi!
+# ==========================================
+with st.expander("💬 Chat Neuron AI (Online)", expanded=False):
+    # Buat kotak chat yang bisa di-scroll (Tinggi 250px)
+    chat_box = st.container(height=250)
+    
+    # Tampilkan isi history chat
+    for msg in st.session_state.chat_history:
+        if msg["role"] == "assistant":
+            chat_box.markdown(f"🤖 **Neuron AI:** <span style='color:#ccc; font-size:14px;'>{msg['content']}</span>", unsafe_allow_html=True)
+        else:
+            chat_box.markdown(f"👤 **Anda:** <span style='color:#FFD700; font-size:14px;'>{msg['content']}</span>", unsafe_allow_html=True)
+    
+    # Form input pesan user
+    with st.form("chat_form", clear_on_submit=True):
+        col_input, col_btn = st.columns([4, 1])
+        with col_input:
+            user_msg = st.text_input("Tanya", label_visibility="collapsed", placeholder="Ketik pesan di sini...")
+        with col_btn:
+            submit_chat = st.form_submit_button("Kirim")
+        
+        # Logika pas user pencet tombol kirim
+        if submit_chat and user_msg:
+            # 1. Simpan pesan user
+            st.session_state.chat_history.append({"role": "user", "content": user_msg})
+            
+            # 2. Mesin Penjawab Otomatis Berbasis Keyword
+            p_lower = user_msg.lower()
+            if any(kata in p_lower for kata in ["bayar", "vip", "premium", "beli", "lynk", "daftar", "upgrade"]):
+                jawaban = "Untuk buka Akses VIP, langsung aja klik tombol **Beli Sekarang** yang ada di layar atau [Klik Di Sini](http://lynk.id/neuronada/qgp6d4lr175j/checkout). Investasinya cuma **Rp 19.000**. Setelah sukses bayar, kirim *screenshot* ke WA Coach Ahmad ya!"
+            elif any(kata in p_lower for kata in ["neuro nada", "aplikasi", "fungsi", "buat apa", "tujuan"]):
+                jawaban = "Neuro Nada OS adalah mesin pemetaan presisi tinggi perpaduan NLP dan algoritma waktu Nusantara buat bongkar *blind spot* (titik buta) karakter bawah sadar Anda."
+            elif any(kata in p_lower for kata in ["ahmad", "coach", "konsultasi", "terapi", "hubungi", "wa"]):
+                jawaban = "Coach Ahmad Septian (Certified NLP Trainer & Hypnotherapist) siap membantu kalibrasi mental Anda. Langsung klik link WA di menu sebelah kiri (Sidebar) ya."
+            elif any(kata in p_lower for kata in ["error", "bug", "nggak jalan", "blank", "macet"]):
+                jawaban = "Jika sistem mengalami proses berulang (*loading*), silakan muat ulang (*refresh*) browser Anda. Pastikan nama terisi (minimal 3 huruf) dan format tanggal benar."
+            else:
+                jawaban = "Maaf, Neuron AI masih dalam tahap pembelajaran. Untuk pertanyaan detail mengenai NLP atau penjadwalan terapi, silakan langsung hubungi Coach Ahmad via tombol WhatsApp di menu samping!"
+            
+            # 3. Simpan jawaban bot dan render ulang layar
+            st.session_state.chat_history.append({"role": "assistant", "content": jawaban})
+            st.rerun()
