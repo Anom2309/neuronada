@@ -522,7 +522,7 @@ with st.sidebar:
                 st.error("❌ Email Anda belum terdaftar aktif.")
         
         # PERUBAHAN POIN 2: CTA DI SIDEBAR MENGARAH KE PAYMENT GATEWAY OTOMATIS
-        st.markdown("<p style='font-size:13px; color:#888;'>Belum punya akses VIP? <br><a href='[http://lynk.id/neuronada/qgp6d4lr175j/checkout]' target='_blank' style='color:#25D366; font-weight:bold; text-decoration:none;'>🚀 Daftar & Bayar Otomatis Di Sini</a></p>", unsafe_allow_html=True)
+        st.markdown("<p style='font-size:13px; color:#888;'>Belum punya akses VIP? <br><a href='[LINK_PAYMENT_GATEWAY_LU_DISINI]' target='_blank' style='color:#25D366; font-weight:bold; text-decoration:none;'>🚀 Daftar & Bayar Otomatis Di Sini</a></p>", unsafe_allow_html=True)
     else:
         st.success("👑 Status: VIP MEMBER")
         if st.button("Logout"):
